@@ -7,6 +7,7 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import datetime
+from datetime import date
 
 app = dash.Dash(__name__)
 
@@ -36,8 +37,17 @@ app.layout = html.Div(children=[
                  style={"width": "40%"})]),
 
     html.Div([html.P(),
+              html.H5('Year-Slider'),
+              dcc.Slider(id='Jahr',
+                         min=df['Jahr'].min(),
+                         max=df['Jahr'].max(),
+                         value=df['Jahr'].max(),
+                         marks={str(year): str(year) for year in df['Jahr'].unique()},
+                            step=None,)]),
+
+    html.Div([html.P(),
               html.H5('Magnitude-Slider'),
-                dcc.Slider(id='mag-slider', min=4.5, max=8, step=0.1, value=5.5,
+                dcc.Slider(id='mag-slider', min=4.5, max=8, step=0.1, value=df['mag'].max(),
                tooltip={'always_visible': True},
                marks={4.5: '4.5m', 5.0: '5.0m', 5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
 
@@ -67,15 +77,17 @@ app.layout = html.Div(children=[
      Output(component_id='earthquakeplot3', component_property='figure'),],
 
     [Input(component_id='type', component_property='value'),
-     Input(component_id='mag-slider', component_property='value')]
+     Input(component_id='mag-slider', component_property='value'),
+     Input(component_id='Jahr', component_property='value')]
 
 )
 
 
-def update_graph(option_slctd, option_slctd2):
+def update_graph(option_slctd, option_slctd2, option_slctd3):
     dff = df.copy()
     dff = dff[dff["type"] == option_slctd]
-    dff = dff[dff["mag"] > option_slctd2]
+    dff = dff[dff["mag"] <= option_slctd2]
+    dff = dff[dff["Jahr"] <= option_slctd3]
 
     # Plotly Express
     fig = px.scatter_matrix(dff, title="Scatter-Matrix Earthquakes in the USA",
