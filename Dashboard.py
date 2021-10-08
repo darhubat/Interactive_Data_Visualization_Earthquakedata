@@ -18,7 +18,7 @@ df['Jahr'] = df['time'].dt.year
 
 lats=df['latitude'].to_list()
 lons=df['longitude'].to_list()
-coords=list(zip(lats,lons))
+coords=list(zip(lats, lons))
 
 
 
