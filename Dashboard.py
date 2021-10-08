@@ -37,9 +37,9 @@ app.layout = html.Div(children=[
 
     html.Div([html.P(),
               html.H5('Magnitude-Slider'),
-                dcc.Slider(id='mag-slider', min=0, max=9, step=0.1, value=5.5,
-               tooltip={'always_visible': False},
-               marks={5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
+                dcc.Slider(id='mag-slider', min=4.5, max=8, step=0.1, value=5.5,
+               tooltip={'always_visible': True},
+               marks={4.5: '4.5m', 5.0: '5.0m', 5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
 
     html.Div(children=[
         dcc.Graph(id='earthquakeplot', figure={}),
