@@ -3,17 +3,13 @@ import plotly.express as px
 import requests
 import io
 import dash
-import dash_core_components as dcc
 from dash import dcc
-import dash_html_components as html
+from dash import html
 from dash.dependencies import Input, Output
 import datetime
 
 app = dash.Dash(__name__)
 
-# CSV_URL = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
-# csv_data = requests.get(CSV_URL).content
-# df = pd.read_csv(io.StringIO(csv_data.decode('latin1')), sep=',')
 
 df = pd.read_csv("Erdbebendaten_USA_1965-2016.csv")
 df['time'] = pd.to_datetime(df['time'])
@@ -29,84 +25,75 @@ app.layout = html.Div(children=[
 
     html.H1("Erdbeben Dashboard USA mit Dash and Plotly Express", style={'text-align': 'center'}),
 
-    html.H4("Zahlen und Fakten zu den Erdbeben von 1965-2016", style={'text-align': 'left'}),
-
-    dcc.Dropdown(id='location',
+    html.H3("Zahlen und Fakten zu den Erdbeben von 1965-2016", style={'text-align': 'left'}),
+    html.Div([html.P(),
+              html.H5('Ereignis-Typ'),
+                dcc.Dropdown(id='type',
                  options=[
-                     {"label": "Germany", "value": 'Germany'},
-                     {"label": "India", "value": 'India'},
-                     {"label": "France", "value": 'France'},
-                     {"label": "Austria", "value": 'Austria'},
-                     {"label": "Slovenia", "value": 'Slovenia'},
-                     {"label": "Netherlands", "value": 'Netherlands'},
-                     {"label": "Nigeria", "value": 'Nigeria'},
-                     {"label": "Switzerland", "value": 'Switzerland'}],
+                     {"label": "earthquake", "value": 'earthquake'}],
                  multi=False,
-                 value='Germany',
-                 style={"width": "40%"}),
+                 value='earthquake',
+                 style={"width": "40%"})]),
 
-    dcc.Slider(id='my-slider', min=0, max=100000, step=1000, value=0,
-               tooltip={'always_visible': True},
-               marks={5000 * i: '{}'.format(5000 * i) for i in range(21)}, ),
+    html.Div([html.P(),
+              html.H5('Magnitude-Slider'),
+                dcc.Slider(id='mag-slider', min=0, max=9, step=0.1, value=5.5,
+               tooltip={'always_visible': False},
+               marks={5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
 
     html.Div(children=[
-        dcc.Graph(id='covidplot', figure={}),
-        dcc.Graph(id='covidplot2', figure={})],
+        dcc.Graph(id='earthquakeplot', figure={}),
+        dcc.Graph(id='earthquakeplot2', figure={})],
         style={'display': 'inline-block',
                'vertical-align': 'top',
                'margin-left': '3vw', 'margin-top': '3vw',
                'width': '40vw', 'height': '40vh'}),
 
     html.Div(children=[
-        dcc.Graph(id='covidplot3', figure={}),
-        dcc.Graph(id='covidplot4', figure={})],
+        dcc.Graph(id='earthquakeplot3', figure={}),
+        dcc.Graph(id='earthquakeplot4', figure={})],
         style={'display': 'inline-block',
                'vertical-align': 'top',
                'margin-left': '3vw', 'margin-top': '3vw',
-               'width': '40vw', 'height': '40vh'})
+               'width': '40vw', 'height': '40vh'}),
 
 ])
 
 
 @app.callback(
 
-    [Output(component_id='covidplot', component_property='figure'),
-     Output(component_id='covidplot2', component_property='figure'),
-     Output(component_id='covidplot3', component_property='figure'),
-     Output(component_id='covidplot4', component_property='figure')],
+    [Output(component_id='earthquakeplot', component_property='figure'),
+     Output(component_id='earthquakeplot2', component_property='figure'),
+     Output(component_id='earthquakeplot3', component_property='figure'),],
 
-    [Input(component_id='location', component_property='value'),
-     Input(component_id='my-slider', component_property='value')]
+    [Input(component_id='type', component_property='value'),
+     Input(component_id='mag-slider', component_property='value')]
 
 )
 
 
 def update_graph(option_slctd, option_slctd2):
     dff = df.copy()
-    dff = dff[dff["location"] == option_slctd]
-    dff = dff[dff["new_cases"] > option_slctd2]
+    dff = dff[dff["type"] == option_slctd]
+    dff = dff[dff["mag"] > option_slctd2]
 
     # Plotly Express
-    fig = px.line(dff, x='date',
-                  y=['new_cases', 'new_deaths', 'new_vaccinations',
-                     'total_vaccinations_per_hundred'],
-                  title="Line Graphs for Several Relevant Attributes for " + option_slctd)
+    fig = px.scatter_matrix(dff, title="Scatter-Matrix Earthquakes in the USA",
+                dimensions=["depth", "mag", "latitude", "longitude"], hover_data=['place'],
+                 color="mag", labels=dict(depth="Depth", mag="Magnitude", latitude="Latitude", longitude="Longitude"))
+    fig.update_layout(title_font_size=20)
 
-    fig2 = px.scatter(dff, x="new_cases", y="new_deaths",
-                      color="new_deaths", size="new_cases", hover_data=['date'],
-                      marginal_x="box", marginal_y="violin", trendline="ols",
-                      title="Correlations Between New Cases and New Deaths for " + option_slctd)
+    fig2 = px.scatter(dff, title="Magnitude & Depth Earthquakes in the USA", x="depth", y="mag", color="mag",
+                 size='mag', hover_data=['place'], labels=dict(depth="Depth", mag="Magnitude"))
+    fig2.update_layout(title_font_size=20)
 
-    fig3 = px.box(dff, x="new_cases", title="Distribution of New Cases for " + option_slctd)
 
-    fig4 = px.choropleth(df, locations="iso_code",
-                         color="total_deaths_per_million",
-                         hover_name="location",
-                         animation_frame="date",
-                         title="Deaths per Million in the World",
-                         color_continuous_scale=px.colors.sequential.PuRd)
+    fig3 = px.scatter_geo(dff, lat='latitude', lon='longitude',
+                  scope='usa', text='place',
+                  hover_data=['Jahr'], size='mag',
+                  opacity=0.4, animation_frame='Jahr', projection='albers usa')
 
-    return fig, fig2, fig3, fig4
+    return fig, fig2, fig3
 
 
 if __name__ == '__main__':
