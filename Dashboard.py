@@ -110,16 +110,19 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
     fig2.update_layout(title_font_size=20)
 
 
-    fig4 = px.scatter_geo(dff, lat='latitude', lon='longitude',
+    fig4 = px.scatter_geo(dff, title='Erdbeben in den USA animiert jährlich von ' + str(years_slctd[0]) + ' bis ' + str(years_slctd[1]),
+                          lat='latitude', lon='longitude',
                   scope='usa', text='place',
                   hover_data=['Jahr'], size='mag',
                   opacity=0.4, animation_frame='Jahr', projection='albers usa')
+    fig4.update_layout(title_font_size=20)
 
-
-    fig3 = px.scatter_geo(dff, lat='latitude', lon='longitude',
+    fig3 = px.scatter_geo(dff, title='Alle Erdbeben in den USA von ' + str(years_slctd[0]) + ' bis ' + str(years_slctd[1]),
+                          lat='latitude', lon='longitude',
                   scope='usa',
                   hover_data=['Jahr', 'place'], size='mag',
                   opacity=0.4, projection='albers usa')
+    fig3.update_layout(title_font_size=20)
 
     return fig, fig2, fig3, fig4
 
