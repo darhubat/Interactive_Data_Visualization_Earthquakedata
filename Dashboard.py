@@ -48,12 +48,12 @@ app.layout = html.Div(children=[
                          allowCross=False,
                          tooltip={'always_visible': True},
                          disabled=False,
-                         step=1, )]),
+                         step=1, )], style={'width': '50%'}),
 
 
     html.Div([html.P(),
-              html.H5('Erdbebenstärke-Slider'),
-                dcc.Slider(id='mag-slider', min=4.5, max=8, step=0.1, value=df['mag'].max(),
+              html.H5('Erdbebenstärke bis'),
+                dcc.Slider(id='mag-slider', min=5.5, max=8, step=0.1, value=df['mag'].max(),
                tooltip={'always_visible': True},
                marks={4.5: '4.5m', 5.0: '5.0m', 5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )], style={'width': '25%'}),
 
