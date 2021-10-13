@@ -16,11 +16,6 @@ df = pd.read_csv("Erdbebendaten_USA_1965-2016.csv")
 df['time'] = pd.to_datetime(df['time'])
 df['Jahr'] = df['time'].dt.year
 
-lats=df['latitude'].to_list()
-lons=df['longitude'].to_list()
-coords=list(zip(lats, lons))
-
-
 
 app.layout = html.Div(children=[
 
@@ -36,20 +31,32 @@ app.layout = html.Div(children=[
                  value='earthquake',
                  style={"width": "40%"})]),
 
-    html.Div([html.P(),
-              html.H5('Year-Slider'),
-              dcc.Slider(id='Jahr',
-                         min=df['Jahr'].min(),
-                         max=df['Jahr'].max(),
-                         value=df['Jahr'].max(),
-                         marks={str(year): str(year) for year in df['Jahr'].unique()},
-                            step=None,)]),
 
     html.Div([html.P(),
-              html.H5('Magnitude-Slider'),
+              html.H5('Jahresfilter von/bis'),
+              dcc.RangeSlider(id='Years',
+                         min=1965,
+                         max=2014,
+                         value=[2000, 2014],
+                         dots=True,
+                         marks={1965: '1965',
+                                1975: '1975',
+                                1985: '1985',
+                                1995: '1995',
+                                2005: '2005',
+                                2015: '2015'},
+                         allowCross=False,
+                         tooltip={'always_visible': True},
+                         disabled=False,
+                         step=1, )]),
+
+
+    html.Div([html.P(),
+              html.H5('Erdbebenstärke-Slider'),
                 dcc.Slider(id='mag-slider', min=4.5, max=8, step=0.1, value=df['mag'].max(),
                tooltip={'always_visible': True},
-               marks={4.5: '4.5m', 5.0: '5.0m', 5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
+               marks={4.5: '4.5m', 5.0: '5.0m', 5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )], style={'width': '25%'}),
+
 
     html.Div(children=[
         dcc.Graph(id='earthquakeplot', figure={}),
@@ -59,6 +66,7 @@ app.layout = html.Div(children=[
                'margin-left': '3vw', 'margin-top': '3vw',
                'width': '40vw', 'height': '40vh'}),
 
+
     html.Div(children=[
         dcc.Graph(id='earthquakeplot3', figure={}),
         dcc.Graph(id='earthquakeplot4', figure={})],
@@ -66,7 +74,6 @@ app.layout = html.Div(children=[
                'vertical-align': 'top',
                'margin-left': '3vw', 'margin-top': '3vw',
                'width': '40vw', 'height': '40vh'}),
-
 ])
 
 
@@ -74,20 +81,22 @@ app.layout = html.Div(children=[
 
     [Output(component_id='earthquakeplot', component_property='figure'),
      Output(component_id='earthquakeplot2', component_property='figure'),
-     Output(component_id='earthquakeplot3', component_property='figure'),],
+     Output(component_id='earthquakeplot3', component_property='figure'),
+     Output(component_id='earthquakeplot4', component_property='figure')],
 
     [Input(component_id='type', component_property='value'),
      Input(component_id='mag-slider', component_property='value'),
-     Input(component_id='Jahr', component_property='value')]
+     Input(component_id='Years', component_property='value')]
 
 )
 
 
-def update_graph(option_slctd, option_slctd2, option_slctd3):
+def update_graph(option_slctd, option_slctd2, years_slctd):
     dff = df.copy()
     dff = dff[dff["type"] == option_slctd]
     dff = dff[dff["mag"] <= option_slctd2]
-    dff = dff[dff["Jahr"] <= option_slctd3]
+    dff = dff[(dff['Jahr'] >= years_slctd[0]) & (dff['Jahr'] <= years_slctd[1])]
+
 
     # Plotly Express
     fig = px.scatter_matrix(dff, title="Scatter-Matrix Earthquakes in the USA",
@@ -95,17 +104,24 @@ def update_graph(option_slctd, option_slctd2, option_slctd3):
                  color="mag", labels=dict(depth="Depth", mag="Magnitude", latitude="Latitude", longitude="Longitude"))
     fig.update_layout(title_font_size=20)
 
+
     fig2 = px.scatter(dff, title="Magnitude & Depth Earthquakes in the USA", x="depth", y="mag", color="mag",
                  size='mag', hover_data=['place'], labels=dict(depth="Depth", mag="Magnitude"))
     fig2.update_layout(title_font_size=20)
 
 
-    fig3 = px.scatter_geo(dff, lat='latitude', lon='longitude',
+    fig4 = px.scatter_geo(dff, lat='latitude', lon='longitude',
                   scope='usa', text='place',
                   hover_data=['Jahr'], size='mag',
                   opacity=0.4, animation_frame='Jahr', projection='albers usa')
 
-    return fig, fig2, fig3
+
+    fig3 = px.scatter_geo(dff, lat='latitude', lon='longitude',
+                  scope='usa',
+                  hover_data=['Jahr', 'place'], size='mag',
+                  opacity=0.4, projection='albers usa')
+
+    return fig, fig2, fig3, fig4
 
 
 if __name__ == '__main__':
