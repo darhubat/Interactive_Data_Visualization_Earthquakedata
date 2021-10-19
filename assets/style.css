@@ -1,0 +1,88 @@
+/*Schriftart einbinden*/
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+
+body * {
+  color: #BB2020;
+  font-family: arial;
+  font-family: 'Quicksand', sans-serif;
+}
+
+h1 {
+    font-size: 22pt;
+    font-weight:700;
+    text-align: center;
+    }
+
+h2 {
+font-size: 15pt;
+font-weight:700;
+text-align: center;
+}
+
+h3, h4, h5 {
+font-size: 12pt;
+font-weight:700;
+text-align: left;
+}
+
+.rc-slider-track {
+  background-color: #BB2020;
+}
+
+.rc-slider-dot-active {
+  border-color: #BB2020;
+}
+
+.rc-slider-handle:hover {
+    border-color: #BB2020;
+}
+
+.rc-slider-handle {
+  background-color: #BB2020;
+  border-color: #BB2020;
+  border: solid 2px #BB2020;
+}
+
+.rc-slider-handle-active:active {
+  border-color: #BB2020;
+}
+
+.rc-slider-mark-text {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    color: #121317;
+}
+
+/***********************************/
+/*Headerbereich*/
+
+#header_div {
+display: flex;
+width: 100%;
+justify-content: space-between;
+background-color: #BEC7C7;
+padding: 20px;
+}
+
+#header_div > div:first-child, #header_div > div:nth-child(3) {
+width: 17.5%;
+}
+#header_div > div:nth-child(2) {
+width: 55%;
+}
+#header_div > div:first-child, #header_div > div:nth-child(2) {
+    margin-right: 5%;
+}
+
+
+/***********************************/
+/*Footerbereich*/
+
+#footer {
+
+
+}
