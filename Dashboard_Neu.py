@@ -58,7 +58,7 @@ app.layout = html.Div(children=[
     html.Div([html.H3('Erdbebenstärke-Slider'),
                 dcc.RangeSlider(id='mag-slider', min=df['mag'].min(), max=df['mag'].max(), step=0.1, value=[df['mag'].min(), df['mag'].max()],
                tooltip={"placement": "bottom", 'always_visible': True},
-               marks={5.5: '5.5m', 6.0: '6.0m', 6.6: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
+               marks={2.0:'2.0m',2.5:'2.5m', 3.0:'3.0m', 3.5:'3.5m', 4.0:'4.0m', 4.5:'4.5m', 5.5: '5.5m', 6.0: '6.0m', 6.5: '6.5m', 7.0: '7.0m', 7.5: '7.5m', 8.0: '8.0m'}, )]),
 
     ]),
 
@@ -158,7 +158,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
             fill_color='#BB2020',
             align="left"),
         cells=dict(
-            values=[df["Jahr"].tolist(), df["mag"].tolist(), df["depth"].tolist(), df["place"].tolist()],
+            values=[dff["Jahr"].tolist(), dff["mag"].tolist(), dff["depth"].tolist(), dff["place"].tolist()],
             font=dict(size=14),
             line_color='black',
             font_color='black',
