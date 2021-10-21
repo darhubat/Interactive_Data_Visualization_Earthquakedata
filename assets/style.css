@@ -34,9 +34,11 @@ text-align: left;
   border-color: #BB2020;
 }
 
-.rc-slider-handle:hover {
-    border-color: #BB2020;
-}
+.rc-slider-handle:hover, .rc-slider-handle:focus, .rc-slider-handle:active, .rc-slider-handle-dragging {
+    border-color: #BB2020!important;
+    box-shadow: none!important;
+    }
+
 
 .rc-slider-handle {
   background-color: #BB2020;
@@ -62,10 +64,11 @@ text-align: left;
 
 #header_div {
 display: flex;
-width: 100%;
+width: calc(100% - 80px);
 justify-content: space-between;
 background-color: #BEC7C7;
 padding: 20px;
+margin: 20px;
 }
 
 #header_div > div:first-child, #header_div > div:nth-child(3) {
@@ -80,9 +83,20 @@ width: 55%;
 
 
 /***********************************/
+/*Content*/
+
+#content_div {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 1fr 1fr;
+}
+
+
+/***********************************/
 /*Footerbereich*/
 
 #footer {
-
-
+width: calc(100% - 40px);
+margin: 20px;
 }
+
