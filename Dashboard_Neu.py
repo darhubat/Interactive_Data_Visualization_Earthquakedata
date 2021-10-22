@@ -106,7 +106,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
                           hover_data=['Jahr'],
                           opacity=0.4, animation_frame='Jahr', projection='albers usa',
                           color='mag',
-                          color_continuous_scale="reds",
+                          color_continuous_scale="solar",
                           # plasma, Bluered_r, aggrnyl, brwnyl, deep, thermal, orrd, redor, gray, temps, reds, ylorrd
                           size="mag",
                           labels={"mag": "Magnitude"})
@@ -119,7 +119,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
                           scope='usa',
                           hover_data=['Jahr', 'place'],
                           opacity=0.4, projection='albers usa',
-                          color_continuous_scale="reds",
+                          color_continuous_scale="solar",
                           # plasma, Bluered_r, aggrnyl, brwnyl, deep, thermal, orrd, redor, gray, temps, reds, ylorrd
                           color='mag',
                           size="mag",
@@ -137,7 +137,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
              color='mag',
              hover_name="type",
              hover_data={'Jahr':True, 'mag':True, "place":True,'number':False},
-             color_continuous_scale="reds", #plasma, Bluered_r, aggrnyl, brwnyl, deep, thermal, orrd, redor, gray, temps, reds, ylorrd
+             color_continuous_scale="solar", #plasma, Bluered_r, aggrnyl, brwnyl, deep, thermal, orrd, redor, gray, temps, reds, ylorrd
              labels={
                      "number": "Anzahl",
                      "mag": "Magnitude",
@@ -155,15 +155,15 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
             font=dict(size=15, family='Arial, bold'),
             line_color='black',
             font_color='black',
-            fill_color='#BB2020',
+            fill_color='#8B321F',
             align="left"),
         cells=dict(
-            values=[dff["Jahr"].tolist(), dff["mag"].tolist(), dff["depth"].tolist(), dff["place"].tolist()],
+            values=[dff["Jahr"].tolist(),dff["mag"].tolist(),dff["depth"].tolist(),dff["place"].tolist() ],
             font=dict(size=14),
             line_color='black',
             font_color='black',
-            fill_color='#f2c4c4',
-            align="left"))
+            fill_color='#F1C9C1',
+            align = "left"))
 
     ])
     fig4.update_layout(title='Informationsboard')
