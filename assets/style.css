@@ -3,7 +3,7 @@
 
 
 body * {
-  color: #BB2020;
+  color: #8B321F;
   font-family: arial;
   font-family: 'Quicksand', sans-serif;
 }
@@ -27,27 +27,27 @@ text-align: left;
 }
 
 .rc-slider-track {
-  background-color: #BB2020;
+  background-color: #8B321F;
 }
 
 .rc-slider-dot-active {
-  border-color: #BB2020;
+  border-color: #8B321F;
 }
 
 .rc-slider-handle:hover, .rc-slider-handle:focus, .rc-slider-handle:active, .rc-slider-handle-dragging {
-    border-color: #BB2020!important;
+    border-color: #8B321F!important;
     box-shadow: none!important;
     }
 
 
 .rc-slider-handle {
-  background-color: #BB2020;
-  border-color: #BB2020;
-  border: solid 2px #BB2020;
+  background-color: #8B321F;
+  border-color: #8B321F;
+  border: solid 2px #8B321F;
 }
 
 .rc-slider-handle-active:active {
-  border-color: #BB2020;
+  border-color: #8B321F;
 }
 
 .rc-slider-mark-text {
