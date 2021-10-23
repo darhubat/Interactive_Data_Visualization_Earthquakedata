@@ -1,10 +1,8 @@
 import pandas as pd
 import plotly.express as px
-import requests
-import io
 import dash
-from dash import dcc
 from dash import html
+from dash import dcc
 from dash.dependencies import Input, Output
 import datetime
 from datetime import date
@@ -12,7 +10,8 @@ from dash import dash_table
 import plotly.graph_objects as go
 
 app = dash.Dash(__name__)
-
+# für Heroku-Server ist die untenstehende Zeile notwendig
+server = app.server
 
 df = pd.read_csv("Erdbebendaten_USA_1965-2016.csv")
 df['time'] = pd.to_datetime(df['time'])
