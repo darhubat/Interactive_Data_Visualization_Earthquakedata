@@ -110,7 +110,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
                           size="mag",
                           labels={"mag": "Magnitude"})
     fig3.update_layout(
-        title='Erdbeben in den USA (mit Zeitschieberegler)',
+        title='Erdbeben in den USA (mit Zeitschieberegler) von ' + str(years_slctd[0]) + '-' + str(years_slctd[1]),
         geo_scope='usa')
 
     # Earthquake-Map 2
@@ -125,7 +125,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
                           labels={"mag": "Magnitude"})
 
     fig1.update_layout(
-        title='Erdbeben in den USA (Karte)',
+        title='Erdbeben in den USA (Karte) von ' + str(years_slctd[0]) + '-' + str(years_slctd[1]),
         geo_scope='usa',
     )
 
@@ -143,7 +143,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
                      "Jahr": "Jahr"},)
 
     fig2.update_layout(
-        title="Anzahl der Erdbeben pro Jahr",
+        title='Anzahl der Erdbeben pro Jahr von ' + str(years_slctd[0]) + '-' + str(years_slctd[1]),
 
     )
 
@@ -165,7 +165,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
             align = "left"))
 
     ])
-    fig4.update_layout(title='Informationsboard')
+    fig4.update_layout(title='Informationsboard von ' + str(years_slctd[0]) + '-' + str(years_slctd[1]))
 
     return fig1, fig2, fig3, fig4
 
