@@ -1,12 +1,18 @@
 /*Schriftart einbinden*/
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-
+body {
+background-color: #1a1818;
+}
 body * {
-  color: #8B321F;
+  color: #fff;
   font-family: arial;
   font-family: 'Quicksand', sans-serif;
 }
+.dash-dropdown * {
+  color: #111!important;
+}
+
 
 h1 {
     font-size: 22pt;
@@ -66,8 +72,10 @@ text-align: left;
 display: flex;
 width: calc(100% - 80px);
 justify-content: space-between;
-background-color: #BEC7C7;
-padding: 20px;
+background-color: #111;
+border: 10px;
+border-radius: 10px;
+padding: 0 10px 20px;
 margin: 20px;
 }
 
@@ -84,12 +92,37 @@ width: 55%;
 
 /***********************************/
 /*Content*/
-
 #content_div {
+margin: 0 20px;
 display: grid;
 grid-template-columns: 1fr 1fr;
 grid-template-rows: 1fr 1fr;
+grid-gap: 20px;
 }
+
+#content_div > div {
+    background-color: #111;
+    border-radius: 10px;
+    border: 10px solid #111;
+}
+
+#earthquakeplot4 {
+padding: 0 20px;
+
+}
+#earthquakeplot4 * {
+    color: #fff;
+    border-style: none!important;
+}
+#earthquakeplot4 tbody * {text-align: left;}
+#earthquakeplot4 tbody tr:nth-child(even) td, #earthquakeplot4 tr:first-child *, #earthquakeplot4 tr:nth-child(2) *  {background-color: #1a1818;}
+#earthquakeplot4 tbody tr:nth-child(odd) td {background-color: #111;}
+#earthquakeplot4 td {font-size: 13px;}
+
+#earthquakeplot4 .dash-filter--case {display: none;}
+
+#earthquakeplot4 .previous-next-container *:not(.current-page) {background-color: transparent;}
+.column-header-name {padding-left: 5px;}
 
 
 /***********************************/
