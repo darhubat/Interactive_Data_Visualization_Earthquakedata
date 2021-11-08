@@ -78,7 +78,7 @@ app.layout = html.Div(children=[
     html.Div(id='content_div',children=[
         dcc.Graph(id='scatter_geo', figure={}),
         dcc.Graph(id='barchart', figure={}),
-        dcc.Graph(id='small_multiples', figure={}),
+        dcc.Graph(id='small_multiples', figure={}, style={'overflowY': 'scroll', 'height': 400}),
         dash_table.DataTable(
         id="table_chart",
         data=df.to_dict('records'),
@@ -174,7 +174,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
 
 
     layout = dict(
-        title='"' + str(option_slctd).capitalize() + 's"' + ' in der Jahresentwicklung von ' + str(years_slctd[0]) + ' bis ' + str(years_slctd[1]),
+        title='"' + str(option_slctd).capitalize() + 's"' + ' in der Jahresentwicklung auf der Karte der USA von ' + str(years_slctd[0]) + ' bis ' + str(years_slctd[1]),
         # showlegend = False,
         autosize=False,
         height=set_height,
