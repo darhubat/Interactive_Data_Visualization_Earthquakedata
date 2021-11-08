@@ -1,7 +1,7 @@
 import plotly.graph_objects as go
 import pandas as pd
 
-df = pd.read_csv("Erdbebendaten_1965-2015_Ereignisse.csv")
+df = pd.read_csv("../Erdbebendaten_1965-2015_Ereignisse.csv")
 df['time'] = pd.to_datetime(df['time'])
 df['Jahr'] = df['time'].dt.year
 df['number'] = 1 #add a new colum with the value 1 for each earthquake
