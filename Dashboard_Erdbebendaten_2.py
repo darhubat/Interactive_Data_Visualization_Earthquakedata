@@ -141,6 +141,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
     fig2.update_layout(
         title='Anzahl der ' + '"' + str(option_slctd).capitalize() + 's"' + ' pro Jahr von ' + str(
             years_slctd[0]) + ' bis ' + str(years_slctd[1]),
+        font=dict(size=9)
 
     )
 
@@ -159,6 +160,7 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
     fig1.update_layout(
         title='"' + str(option_slctd).capitalize() + 's"' + ' in den USA (Karte) von ' + str(years_slctd[0]) + ' bis ' + str(years_slctd[1]),
         geo_scope='usa',
+        font=dict(size=9)
     )
 
     data1 = []
@@ -180,11 +182,12 @@ def update_graph(option_slctd, option_slctd2, years_slctd):
         height=set_height,
         hovermode=False,
         template='plotly_dark',
+        font=dict(size=9),
         legend=dict(
             x=0.7,
             y=-0.1,
             bgcolor="rgba(255, 255, 255, 0)",
-            font=dict(size=11),
+            font=dict(size=10),
         )
     )
 
