@@ -86,7 +86,7 @@ app.layout = html.Div(children=[
         filter_action="native",
         columns=[
             {'name': 'Ort', 'id': 'place', 'type': 'text', 'editable': False},
-            {'name': 'Tiefe', 'id': 'depth', 'type': 'numeric'},
+            {'name': 'Tiefe (km)', 'id': 'depth', 'type': 'numeric'},
             {'name': 'Magnitude', 'id': 'mag', 'type': 'numeric'},
             {'name': 'Jahr', 'id': 'Jahr', 'type': 'datetime'},
         ],
